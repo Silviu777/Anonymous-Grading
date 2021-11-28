@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "anonymous_grading",
+            "dialect": "MariaDB",
+            "isActive": true,
+            "isConnected": true,
+            "name": "repository",
+            "password": "password",
+            "port": 3306,
+            "server": "localhost",
+            "username": "root"
+        }
+    ]
+}
