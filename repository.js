@@ -8,14 +8,6 @@ const sequelize = new Sequelize('anonymous_grading', 'root', 'password', {
     }
 });
 
-// try {
-//     await sequelize.authenticate();
-//     console.log('Connection has been established successfully!');
-// }
-// catch (err) {
-//     console.error('Unable to connect to the database:', err);
-// }
-
 const Project = sequelize.define('project', {
     id: {
         type: Sequelize.INTEGER,
