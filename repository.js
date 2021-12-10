@@ -88,11 +88,11 @@ const Judging = sequelize.define('judging', {
     }
 });
 
-Project.belongsTo(Team, { foreignKey: 'id' });
-Project.hasMany(Judging, { foreignKey: 'id' });
+Project.belongsTo(Team, { foreignKey: 'teamId' });
+Project.hasMany(Judging, { foreignKey: 'id' }); // DE MODIFICAT FOREIGN KEY
 
-Team.hasMany(Student, { foreignKey: 'id' });
-Student.hasMany(Judging, { foreignKey: 'id' }); // DE DISCUTAT
+Team.hasMany(Student, { foreignKey: 'id' }); // DE MODIFICAT FOREIGN KEY
+Student.hasMany(Judging, { foreignKey: 'id' }); // DE DISCUTAT + DE MODIFICAT FOREIGN KEY
 
 async function init() {
     await sequelize.authenticate();
