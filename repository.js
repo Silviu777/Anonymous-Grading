@@ -51,7 +51,7 @@ const Student = sequelize.define('student', {
     },
     teamId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
     }
 });
 
