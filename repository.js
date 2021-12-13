@@ -87,7 +87,6 @@ Judging.belongsTo(Project, { foreignKey: 'projectId' });
 Team.hasMany(Student, { foreignKey: 'teamId' }); // DE MODIFICAT FOREIGN KEY
 Student.belongsTo(Team, { foreignKey: 'teamId' });
 
-
 Student.hasMany(Judging, { foreignKey: 'id' }); // DE DISCUTAT + DE MODIFICAT FOREIGN KEY
 
 async function init() {
