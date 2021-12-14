@@ -1,4 +1,3 @@
-import Sequelize from 'sequelize';
 import { Project, Student, Team, Judging } from './repository.js';
 
 async function getProjects(request, response) {
@@ -86,7 +85,7 @@ async function updateProject(request, response) {
             response.status(404).send(`Project with id ${request.params.id} not found!`);
         }
     } catch (error) {
-        response.status(404).send();
+        response.status(500).json(error);
     }
 }
 
@@ -163,7 +162,7 @@ async function addStudent(request, response) {
             response.status(201).send(`The student with the id ${request.body.id} has been created!`);
         }
         else {
-            if (request.body.id == null || request.body.id == null) {
+            if (request.body.id == null || request.body.id == "") {
                 response.status(400).send(`Missing Student ID`);
             }
             else if (request.body.firstName == null || request.body.firstName == "") {
@@ -191,7 +190,7 @@ async function updateStudent(request, response) {
             response.status(404).send(`Student with id ${request.params.id} not found!`);
         }
     } catch (error) {
-        response.status(500).send();
+        response.status(500).json(error);
     }
 }
 
@@ -247,6 +246,7 @@ async function addTeam(request, response) {
         //     where: { name: request.body.name },
         //     attributes: ["name"]
         // }).then(d => d.get("name"));
+        //  count !
 
         if (request.body.id && request.body.name) {
             await Team.create(request.body);
@@ -290,7 +290,6 @@ async function getJudgings(request, response) {
                 {
                     model: Student,
                     attributes: { exclude: ['id', 'teamId'] },
-
                     model: Project,
                     attributes: { exclude: ['id'] },
                     include: {
@@ -381,5 +380,3 @@ async function updateJudging(request, response) {
 }
 
 export { getProjects, getProject, addProject, updateProject, deleteProject, getStudents, getStudent, addStudent, updateStudent, getTeams, getTeam, addTeam, updateTeam, getJudgings, getJudging, addJudging, updateJudging }
-
-// DE DISCUTAT deleteStudent
