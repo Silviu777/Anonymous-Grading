@@ -19,3 +19,9 @@ server.get('/api', (req, res) => res.send('WORKS'));
 server.listen(process.env.PORT || 8080, () => console.log("App Server running..."));
 
 export { server, router };
+
+// var existingName = await Team.findOne({
+        //     where: { name: request.body.name },
+        //     attributes: ["name"]
+        // }).then(d => d.get("name"));
+        //  count !
