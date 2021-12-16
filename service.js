@@ -38,12 +38,11 @@ async function getProject(request, response) {
                         }
                     }]
             });
-
             if (project) {
                 response.json(project);
             }
             else {
-                response.status(404).send(`Project with id ${request.params.id} not found!`);
+                response.status(404).send(`Project with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
             }
         } else {
             response.status(400).send();
@@ -54,27 +53,39 @@ async function getProject(request, response) {
 }
 
 async function addProject(request, response) {
+    const existingProject = await Project.findAndCountAll({
+        where: {
+            name: request.body.name
+        },
+        attributes: ['name']
+    });
+
     try {
-        if (request.body.id && request.body.name) {
+        if (request.body.id && request.body.name && existingProject['count'] < 1) {
             await Project.create(request.body);
-            response.status(201).send(`Project with id ${request.body.id} has been created!`);
+            response.status(201).send(`The project with the id ${request.body.id} has been created!`);
         }
         else {
-            if (request.body.id == null || request.body.id == "") {
-                response.status(400).send(`Project ID missing!`);
+            if (existingProject['count'] == 1) {
+                response.status(400).send(`Project '${request.body.name}' is already registered! Please select a distinct project name.`);
+            }
+
+            else if (request.body.id == null || request.body.id == "") {
+                response.status(400).send(`Project id missing! Please introduce a valid id in order to add a new project.`);
             }
             else if (request.body.name == null || request.body.name == "") {
-                response.status(400).send(`Project name missing!`);
+                response.status(400).send(`Project name missing! Please introduce a valid name in order to add a new project.`);
             }
         }
     } catch (error) {
-        response.status(500).send(`Project with id ${request.body.id} already exists! Please select another id.`);
+        response.status(500).send(`Project with id ${request.body.id} already exists! Please select a distinct id.`);
     }
 }
 
 async function updateProject(request, response) {
     try {
         const project = await Project.findByPk(request.params.id);
+
         if (project) {
             Object.entries(request.body).forEach(([body, value]) => project[body] = value);
 
@@ -82,7 +93,7 @@ async function updateProject(request, response) {
             response.send(`The project with the id ${request.params.id} has been updated!`);
         }
         else {
-            response.status(404).send(`Project with id ${request.params.id} not found!`);
+            response.status(404).send(`Project with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
         }
     } catch (error) {
         response.status(500).json(error);
@@ -99,7 +110,7 @@ async function deleteProject(request, response) {
                 response.send(`The project with the id ${request.params.id} has been deleted!`);
             }
             else {
-                response.status(404).send(`Project with id ${request.params.id} not found`);
+                response.status(404).send(`Project with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
             }
         } else {
             response.status(400).send();
@@ -118,7 +129,6 @@ async function getStudents(request, response) {
                     attributes: { exclude: ['id'] }
                 }]
         });
-
         if (students.length > 0) {
             response.status(200).json(students);
         }
@@ -140,12 +150,11 @@ async function getStudent(request, response) {
                         attributes: { exclude: ['id'] }
                     }]
             });
-
             if (student) {
                 response.json(student);
             }
             else {
-                response.status(404).send(`Student with id ${request.params.id} not found!`);
+                response.status(404).send(`Student with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
             }
         } else {
             response.status(400).send();
@@ -156,30 +165,42 @@ async function getStudent(request, response) {
 }
 
 async function addStudent(request, response) {
+    const existingStudent = await Student.findAndCountAll({
+        where: {
+            firstName: request.body.firstName,
+            lastName: request.body.lastName
+        },
+        attributes: ['firstName', 'lastName']
+    });
+
     try {
-        if (request.body.id && request.body.firstName && request.body.lastName) {
+        if (request.body.id && request.body.firstName && request.body.lastName && existingStudent['count'] < 1) {
             await Student.create(request.body);
             response.status(201).send(`The student with the id ${request.body.id} has been created!`);
         }
         else {
-            if (request.body.id == null || request.body.id == "") {
-                response.status(400).send(`Missing Student ID`);
+            if (existingStudent['count'] == 1) {
+                response.status(400).send(`Student '${request.body.firstName} ${request.body.lastName}' is already registered! Please introduce a distinct student.`);
+            }
+            else if (request.body.id == null || request.body.id == "") {
+                response.status(400).send(`Student id missing! Please introduce a valid id in order to add a new student.`);
             }
             else if (request.body.firstName == null || request.body.firstName == "") {
-                response.status(400).send(`Missing first name!`);
+                response.status(400).send(`Student first name missing! Please introduce a valid first name in order to add a new student.`);
             }
             else {
-                response.status(400).send(`Missing last name!`);
+                response.status(400).send(`Student last name missing! Please introduce a valid last name in order to add a new student.`);
             }
         }
     } catch (error) {
-        response.status(500).send(`Student with id ${request.body.id} already exists! Please select another id.`);
+        response.status(500).send(`Student with id ${request.body.id} already exists! Please select a distinct id.`);
     }
 }
 
 async function updateStudent(request, response) {
     try {
         const student = await Student.findByPk(request.params.id);
+
         if (student) {
             Object.entries(request.body).forEach(([body, value]) => student[body] = value);
 
@@ -187,7 +208,7 @@ async function updateStudent(request, response) {
             response.send(`The student with the id ${request.params.id} has been updated!`);
         }
         else {
-            response.status(404).send(`Student with id ${request.params.id} not found!`);
+            response.status(404).send(`Student with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
         }
     } catch (error) {
         response.status(500).json(error);
@@ -203,7 +224,6 @@ async function getTeams(request, response) {
                     attributes: { exclude: ['teamId'] }
                 }]
         });
-
         if (teams.length > 0) {
             response.status(200).json(teams);
         }
@@ -229,7 +249,7 @@ async function getTeam(request, response) {
                 response.json(team);
             }
             else {
-                response.status(404).send(`Team with id ${request.params.id} not found!`);
+                response.status(404).send(`Team with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
             }
         }
         else {
@@ -241,42 +261,46 @@ async function getTeam(request, response) {
 }
 
 async function addTeam(request, response) {
-    try {
-        // var existingName = await Team.findOne({
-        //     where: { name: request.body.name },
-        //     attributes: ["name"]
-        // }).then(d => d.get("name"));
-        //  count !
+    const existingTeam = await Team.findAndCountAll({
+        where: {
+            name: request.body.name
+        },
+        attributes: ['name']
+    });
 
-        if (request.body.id && request.body.name) {
+    try {
+        if (request.body.id && request.body.name && existingTeam['count'] < 1) {
             await Team.create(request.body);
-            return response.status(201).send(`Team with id ${request.body.id} has been created!`);
+            return response.status(201).send(`The team with the id ${request.body.id} has been created!`);
         }
         else {
-            if (request.body.id == null || request.body.id == "") {
-                response.status(400).send(`Team ID missing!`);
+            if (existingTeam['count'] == 1) {
+                response.status(400).send(`Team '${request.body.name}' is already registered! Please introduce a distinct team name.`);
+            }
+            else if (request.body.id == null || request.body.id == "") {
+                response.status(400).send(`Team id missing! Please introduce a valid id in order to add a new team.`);
             }
             else if (request.body.name == null || request.body.name == "") {
-                response.status(400).send(`Team name missing!`);
+                response.status(400).send(`Team name missing! Please introduce a valid name in order to add a new team.`);
             }
         }
-
     } catch (error) {
-        return response.status(500).send(`Team with id ${request.body.id} already exists! Please select another id.`);
+        return response.status(500).send(`Team with id ${request.body.id} is already registered! Please select another id.`);
     }
 }
 
 async function updateTeam(request, response) {
     try {
         const team = await Team.findByPk(request.params.id);
+
         if (team) {
             Object.entries(request.body).forEach(([body, value]) => team[body] = value);
 
             await team.save();
-            response.send(`Team with id ${request.params.id} has been updated!`);
+            response.send(`The team with the id ${request.params.id} has been updated!`);
         }
         else {
-            response.status(404).send(`Team with id ${request.params.id} not found!`);
+            response.status(404).send(`Team with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
         }
     } catch (error) {
         response.status(500).json(error);
@@ -302,7 +326,6 @@ async function getJudgings(request, response) {
                     }
                 }]
         });
-
         if (judgings.length > 0) {
             response.status(200).json(judgings);
         }
@@ -332,12 +355,11 @@ async function getJudging(request, response) {
                         }
                     }]
             });
-
             if (judging) {
                 response.json(judging);
             }
             else {
-                response.status(404).send(`Judging with id ${request.params.id} not found!`);
+                response.status(404).send(`Judging with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
             }
         }
         else {
@@ -349,13 +371,21 @@ async function getJudging(request, response) {
 }
 
 async function addJudging(request, response) {
+    const existingJudging = await Judging.findAndCountAll({
+        where: {
+            projectId: request.body.projectId,
+            studentId: request.body.studentId
+        },
+        attributes: ['projectId', 'studentId']
+    });
+
     try {
-        if (request.body) {
+        if (existingJudging['count'] < 1) {
             await Judging.create(request.body);
             response.status(201).send(`Judging with id ${request.body.id} has been added!`);
         }
         else {
-            response.status(400).send();
+            response.status(400).send(`You can only judge the same project once!`);
         }
     } catch (error) {
         response.status(500).json(error);
@@ -365,14 +395,15 @@ async function addJudging(request, response) {
 async function updateJudging(request, response) {
     try {
         const judging = await Judging.findByPk(request.params.id);
+
         if (judging) {
             Object.entries(request.body).forEach(([body, value]) => judging[body] = value);
 
             await judging.save();
-            response.send(`Judging with id ${request.body.id} has been updated!`);
+            response.send(`The judging with the id ${request.body.id} has been updated!`);
         }
         else {
-            response.status(404).send(`Judging with id ${request.params.id} not found!`);
+            response.status(404).send(`Judging with id ${request.params.id} not found! Please introduce a valid id in order to complete the requested action.`);
         }
     } catch (error) {
         response.status(500).json(error);

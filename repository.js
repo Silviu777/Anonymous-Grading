@@ -86,7 +86,6 @@ Judging.belongsTo(Project, { foreignKey: 'projectId' });
 
 Team.hasMany(Student, { foreignKey: 'teamId' });
 Student.belongsTo(Team, { foreignKey: 'teamId' });
-
 Student.hasMany(Judging, { foreignKey: 'id' });
 
 async function init() {
