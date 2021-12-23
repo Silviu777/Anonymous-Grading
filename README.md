@@ -14,3 +14,7 @@ Olaru Rick Roberto
 Notinaru Ana-Maria
  - realizarea instanțelor asociate proiectului cu ajutorul ORM-ului Sequelize
  - efectuarea și testarea conexiunii la baza de date
+
+<hr>
+
+**Dragomir Denis-Alexandru**: Am verificat partea de backend.
