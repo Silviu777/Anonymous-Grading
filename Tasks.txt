@@ -1,0 +1,79 @@
+
+	•	BackEnd
+ 
+- Project Data 
+  --> Campuri: nume, descriere proiect, membrii, deadline
+  --> text boxes, drop-down lists, Add buttons)
+ 
+- Student Data
+  --> Campuri: nume, prenume, grupa, proiect repartizat
+ 
+ 
+- Grading Data (per Project)
+  -->  Add buttons, drop-down lists (select Project to judge)
+ 
+  -->  Note: anonime per proiect;  
+          Pentru NOTA FINALA: se omit cele mai mari&cele mai mici note + se puncteaza de la 1-10 cu 2 zecimale.
+ 
+- ROUTING
+ 
+- CRUD Ops
+ 
+ TO-DO: LINKS
+ 
+
+	•	Login Page & Users Permissions
+ 
+     - Profesor: vede DOAR evaluarea pentru fiecare proiect fara a afla identitatea juriului.
+ 
+     - Student MP:  poate sa adauge/modifice datele proiectului pe care este alocat.
+ 
+     -  Student NON-MP: poate sa faca parte din juriu si sa acorde note (selectat aleatoriu ?) ; Doar UN membru al juriului poate sa adauge/modifice note si doar notele lui ? 
+ 
+     - Login Page if Architecture is SPA?
+ 
+ 
+Links
+ 
+ https://css-tricks.com/handling-user-permissions-in-javascript/
+ 
+  https://www.youtube.com/watch?v=6BozpmSjk-Y
+ 
+  https://www.youtube.com/watch?v=k8yJCeuP6I8
+
+
+
+
+	•	FrontEnd
+ 
+--> Interfata minimala pentru test BackEnd (pentru moment): CSS, HMTL
+ 
+ TO DO: LINKS
+
+ 
+	•	Sectiune Drag&Drop Proiect
+ 
+	•	Incarcare video proiect/ link proiect (ex: repo GitHub)
+  -  DIV cu butonul de Drag&Drop si stilizare cu CSS  
+ 
+Links
+ 
+https://www.youtube.com/watch?v=SE38zdOOrAQ
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
