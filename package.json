@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "heroku": "^7.59.2"
-  },
-  "devDependencies": {
-    "mini-css-extract-plugin": "2.4.5"
-  }
-}
