@@ -64,7 +64,6 @@ function App() {
 
         <Container>
           <Row>
-
             <div className='home'>
               <h1>Welcome to Anonymous Grading</h1>
               <p>Choose an option from above in order to get started</p>
@@ -108,7 +107,6 @@ function App() {
                     path="/api/students"
                     component={(props) => <StudentList {...props} />}
                   />
-
                 </Switch>
               </div>
             </Col>

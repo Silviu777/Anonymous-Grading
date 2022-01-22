@@ -24,7 +24,7 @@ export default class ProjectList extends Component {
             })
     }
 
-    DataTable() {
+    dataTable() {
         return this.state.projects.map((res, i) => {
             return <ProjectTable obj={res} key={i} />;
         });
@@ -42,7 +42,7 @@ export default class ProjectList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.DataTable()}
+                    {this.dataTable()}
                 </tbody>
             </Table>
         </div>);

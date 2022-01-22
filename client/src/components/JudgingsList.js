@@ -24,7 +24,7 @@ export default class JudgingList extends Component {
             })
     }
 
-    DataTable() {
+    dataTable() {
         return this.state.judgings.map((res, i) => {
             return <JudgingTable obj={res} key={i} />;
         });
@@ -42,7 +42,7 @@ export default class JudgingList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.DataTable()}
+                    {this.dataTable()}
                 </tbody>
             </Table>
         </div>);

@@ -24,7 +24,7 @@ export default class StudentList extends Component {
             })
     }
 
-    DataTable() {
+    dataTable() {
         return this.state.students.map((res, i) => {
             return <StudentTable obj={res} key={i} />;
         });
@@ -42,7 +42,7 @@ export default class StudentList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.DataTable()}
+                    {this.dataTable()}
                 </tbody>
             </Table>
         </div>);
